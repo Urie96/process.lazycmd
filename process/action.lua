@@ -11,7 +11,7 @@ local function span(value, color)
 end
 
 local function current_entry()
-  local entry = lc.api.page_get_hovered()
+  local entry = lc.api.get_hovered()
   if not entry or entry.kind ~= 'process' or not entry.pid then return nil end
   return entry
 end
