@@ -7,21 +7,21 @@ function M.setup(opt)
   config.setup(opt or {})
   meta.setup(config.get())
 
-  local has_ps = lc.system.executable(config.get().ps_command)
-  local has_pstree = lc.system.executable(config.get().pstree_command)
+  local has_ps = deck.system.executable(config.get().ps_command)
+  local has_pstree = deck.system.executable(config.get().pstree_command)
 
   if not has_ps then
-    lc.notify('Error: ' .. config.get().ps_command .. ' command not found')
-    lc.log('error', '{} command not found', config.get().ps_command)
+    deck.notify('Error: ' .. config.get().ps_command .. ' command not found')
+    deck.log('error', '{} command not found', config.get().ps_command)
   elseif not has_pstree then
-    lc.log('warn', '{} command not found, preview may not work', config.get().pstree_command)
+    deck.log('warn', '{} command not found, preview may not work', config.get().pstree_command)
   else
-    lc.log('info', '{} and {} commands are available', config.get().ps_command, config.get().pstree_command)
+    deck.log('info', '{} and {} commands are available', config.get().ps_command, config.get().pstree_command)
   end
 end
 
 function M.list(_, cb)
-  lc.system({ config.get().ps_command, '-eo', 'pid,command' }, function(out)
+  deck.system({ config.get().ps_command, '-eo', 'pid,command' }, function(out)
     if out.code ~= 0 then
       cb(meta.attach {
         {
